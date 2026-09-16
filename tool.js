@@ -81,19 +81,19 @@ async function lookup(){
  const cand=scored.filter(x=>x[0]>=top-0.3).slice(0,6);
  const head=tied?'More than one building matches. Which one?':(cand.length===1?'Closest record on file. Is this the building?':'No exact match. Did you mean one of these?');
  out.innerHTML='<p><b>'+head+'</b></p><div class="matches">'+cand.map((x,i)=>{const p=x[1];
-   return '<button type="button" data-i="'+i+'">'+esc(p[1])+', '+esc(p[2])+' ('+(p[3]||'?')+' unit'+(p[3]===1?'':'s')+', built '+(p[4]||'?')+') <small>AIN '+esc(p[0])+'</small></button>';}).join('')+
+   return '<button type="button" data-i="'+i+'">'+esc(p[1])+', '+esc(p[2])+' ('+(p[3]>=5?p[3]+' units':'5+ units')+', built '+(p[4]||'?')+') <small>AIN '+esc(p[0])+'</small></button>';}).join('')+
    '</div><p class="muted">If none of these is it, check the street name and ZIP, or <a href="mailto:'+EMAIL+'">email me the address</a>.</p>';
  out.querySelectorAll('.matches button').forEach(b=>b.onclick=()=>show(cand[+b.dataset.i][1],z));}
 
 function show(p,z){
  const ain=p[0],situs=p[1],city=p[2],units=p[3],yb=p[4],sqft=p[5],lat=p[6],lon=p[7];
- const rc=sqft*RC, rents=units*RENT*12, pre=!!(yb&&yb<1978), rr=rentRule(city,yb);
+ const okU=units>=5, rc=sqft*RC, rents=(okU?units:0)*RENT*12, pre=!!(yb&&yb<1978), rr=rentRule(city,yb);
  const fact=(k,v,cls)=>'<div class="fact '+(cls||'')+'"><small>'+k+'</small><b>'+v+'</b></div>';
  const softCard='<div class="fact" id="f-soft"><small>Soft-story list (LA city)</small><b>Checking...</b></div>';
  out.innerHTML='<h3 style="margin-top:14px">'+esc(situs)+', '+esc(city)+' '+esc(z)+'</h3><div class="facts">'+
  (MODE==='softstory'?softCard:'')+
- fact('Units',units||'Unknown')+fact('Year built',yb||'Unknown',pre?'warn':'good')+fact('Square feet',sqft?sqft.toLocaleString():'Unknown')+
- fact('Replacement cost estimate',sqft?'$'+rc.toLocaleString():'Unknown')+fact('Loss of rents, 12 months',units?'$'+rents.toLocaleString():'Unknown')+fact('Loss of rents, 24 months',units?'$'+(rents*2).toLocaleString():'Unknown')+
+ fact('Units',okU?units:'5 or more (county classified)')+fact('Year built',yb||'Unknown',pre?'warn':'good')+fact('Square feet',sqft?sqft.toLocaleString():'Unknown')+
+ fact('Replacement cost estimate',sqft?'$'+rc.toLocaleString():'Unknown')+'<div class="fact" id="f-lr12"><small>Loss of rents, 12 months</small><b>'+(okU?'$'+rents.toLocaleString():'Enter unit count below')+'</b></div>'+'<div class="fact" id="f-lr24"><small>Loss of rents, 24 months</small><b>'+(okU?'$'+(rents*2).toLocaleString():'Enter unit count below')+'</b></div>'+
  fact('Rent regulation',esc(rr[0]),rr[1])+
  (MODE==='softstory'?'':softCard)+'<div class="fact" id="f-flood"><small>FEMA flood zone</small><b>Checking...</b></div><div class="fact" id="f-fire"><small>Fire hazard zone</small><b>Checking...</b></div></div>'+
  '<div class="gaps"><b>Four things to check on the current policy</b><ul>'+(pre?'<li><b>Ordinance and law A, B and C.</b> Pre-1978 building: the city will require a code-compliant rebuild. <a href="/ordinance-and-law.html">Why.</a></li>':'')+
@@ -102,7 +102,12 @@ function show(p,z){
  '<li><b>Water damage deductible.</b> Ask whether a separate, higher deductible applies to water losses.</li></ul></div>'+
  '<div class="capture"><b>Want this as a written report, with the gaps checked against your actual policy?</b><p class="muted">Free, no obligation. I read the policy and send back what I find.</p>'+
  '<input id="c-name" placeholder="Your name"><input id="c-email" type="email" placeholder="Email"><input id="c-when" placeholder="Renewal or closing date (optional)"><button class="btn" id="c-send">Send me the report</button><p class="muted" id="c-msg"></p></div>';
- document.getElementById('c-send').onclick=()=>capture({ain:ain,situs:situs,city:city,zip:z,units:units,yb:yb,sqft:sqft});
+ let uCount=okU?units:0;
+ if(!okU){const facts=out.querySelector('.facts'); const box=document.createElement('p'); box.className='muted'; box.innerHTML='The county record does not carry a reliable unit count for this building'+(units?' (it lists '+units+', but the county classifies the parcel as 5 or more apartments)':'')+'. How many units does it have? <input id="cmb-units" type="number" min="5" max="999" inputmode="numeric" style="width:90px;padding:6px;border:1px solid #cbd5e1;border-radius:6px">'; facts.after(box);
+  document.getElementById('cmb-units').addEventListener('input',e=>{const u=parseInt(e.target.value,10); const ok=u>=5&&u<=999; uCount=ok?u:0; const r=u*RENT*12;
+   document.querySelector('#f-lr12 b').textContent=ok?'$'+r.toLocaleString():'Enter unit count below';
+   document.querySelector('#f-lr24 b').textContent=ok?'$'+(r*2).toLocaleString():'Enter unit count below';});}
+ document.getElementById('c-send').onclick=()=>capture({ain:ain,situs:situs,city:city,zip:z,units:uCount,yb:yb,sqft:sqft});
  const set=(id,label,val,cls)=>{const n=document.getElementById(id); if(!n)return; n.innerHTML='<small>'+label+'</small><b>'+val+'</b>'; n.className='fact '+(cls||'');};
  softStory(situs,city,z,pre,set);
  hazards(lat,lon,set);}
@@ -138,7 +143,7 @@ function hazards(lat,lon,set){
 
 function mailtoLink(b,name,email,when){
  return 'mailto:'+EMAIL+'?subject='+encodeURIComponent('Building report: '+b.situs+', '+b.zip)+
-  '&body='+encodeURIComponent('Name: '+name+'\nEmail: '+email+'\nDate: '+when+'\nBuilding: '+b.situs+', '+b.city+' '+b.zip+' ('+b.units+' units, built '+b.yb+')');}
+  '&body='+encodeURIComponent('Name: '+name+'\nEmail: '+email+'\nDate: '+when+'\nBuilding: '+b.situs+', '+b.city+' '+b.zip+' ('+(b.units?b.units+' units':'unit count not given')+', built '+b.yb+')');}
 async function capture(b){
  const name=document.getElementById('c-name').value.trim(), email=document.getElementById('c-email').value.trim(), when=document.getElementById('c-when').value.trim();
  const msg=document.getElementById('c-msg');
