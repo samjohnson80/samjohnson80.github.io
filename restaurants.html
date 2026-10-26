@@ -14,7 +14,7 @@ p,li,dd{max-width:65ch}
 .top{display:flex;justify-content:space-between;align-items:center;padding:18px clamp(20px,5vw,64px);font-size:16px;border-bottom:1px solid var(--rule)}
 .top b{font-family:var(--serif);font-size:20px;font-weight:600}
 .top span{color:var(--soft)}
-.top a{font-weight:600;text-decoration:none;border-bottom:2px solid var(--ink);padding:12px 0 2px}
+.topnav{display:flex;align-items:center;gap:22px}.top a{font-weight:600;text-decoration:none;border-bottom:2px solid var(--ink);padding:12px 0 2px}
 .hero{display:grid;grid-template-columns:1.05fr 1fr;min-height:min(calc(100vh - 62px),860px)}
 .hero .copy{padding:clamp(40px,7vw,96px) clamp(20px,5vw,64px) 56px;display:flex;flex-direction:column;justify-content:center}
 .eyebrow{display:block;font-family:var(--sans);font-size:16px;line-height:1.4;letter-spacing:0;font-variation-settings:normal;color:var(--soft);font-weight:600;margin-bottom:20px}
@@ -118,7 +118,7 @@ blockquote{font-family:var(--serif);font-style:italic;font-size:clamp(24px,2.6vw
 .src a{color:#f6f1e9;display:inline-block;padding:10px 0}
 /* menu */
 .menu{display:grid;grid-template-columns:.8fr 1.6fr;gap:clamp(36px,6vw,96px)}
-.menu dl{border-top:2px solid var(--ink)}
+.menu dl,#notes dl{border-top:2px solid var(--ink)}#notes dl{margin-top:28px}
 .item{padding:24px 0;border-bottom:1px solid var(--rule)}
 .item dt{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px;font-family:var(--serif);font-size:24px;font-weight:600}
 .item dt i{font-size:15px;font-family:var(--sans);font-style:normal;font-weight:500;color:var(--soft)}
@@ -177,7 +177,7 @@ footer a{display:inline-block;padding:8px 0}
 body{font-size:17px;padding-bottom:76px}.sc p,.item dd,.who+p,.acc details>p,.check label,.sx.on .watch{font-size:17px}
 .hero{grid-template-columns:1fr;min-height:0}
 .photo{order:-1;aspect-ratio:5/4}.photo img{object-position:50% 28%}
-.eyebrow{font-size:15px;margin-bottom:14px}.top a{display:none}.top span{font-size:15px}
+.eyebrow{font-size:15px;margin-bottom:14px}.top a.phonelink{display:none}.top span{font-size:15px}
 .hero .copy{padding:30px 20px 44px}h1{font-size:40px}.hero p.intro{font-size:18px}
 section{padding:56px 20px}
 .note,.menu,.qz,.cost,.prep{grid-template-columns:1fr}
@@ -198,7 +198,7 @@ section{padding:56px 20px}
 .stick .textlink{flex:1;justify-content:center;border:1.5px solid var(--ink);min-height:52px;border-radius:3px;text-decoration:none}
 }
 </style></head><body>
-<header class="top"><div><b>Sam Johnson</b> <span>&nbsp;SMMA Insurance &middot; Monrovia</span></div><a href="tel:+12056392604">Call 626-799-7813</a></header>
+<header class="top"><div><b>Sam Johnson</b> <span>&nbsp;SMMA Insurance &middot; Monrovia</span></div><nav class="topnav"><a href="/blog/">Notes</a><a class="phonelink" href="tel:+12056392604">Call 626-799-7813</a></nav></header>
 <div class="hero">
 <div class="copy">
 <h1><span class="eyebrow">Restaurant &amp; bar insurance in Monrovia, Pasadena &amp; the San Gabriel Valley</span>Own a restaurant in the San Gabriel Valley? <em>Let me buy you lunch.</em></h1>
@@ -331,6 +331,18 @@ section{padding:56px 20px}
 </ol></details>
 </div></section>
 
+<section id="notes"><div class="inner">
+<p class="label">From the notebook</p>
+<h2>A few things I keep explaining at lunch.</h2>
+<p class="lede">I wrote them down so you can read them before we sit down.</p>
+<dl>
+<div class="item"><dt><a href="/blog/california-restaurant-insurance-market.html">The market, as I see it this fall</a></dt><dd>Property, the FAIR Plan, workers&rsquo; comp benchmarks, and the assault-and-battery exclusion.</dd></div>
+<div class="item"><dt><a href="/blog/liquor-liability-type-41-type-47.html">Liquor liability for a Type 41 or a Type 47</a></dt><dd>What the license allows, when you can still be sued, and why the certificate does not show the exclusion.</dd></div>
+<div class="item"><dt><a href="/blog/new-restaurant-insurance-california.html">What a new California restaurant actually needs</a></dt><dd>The lease first, then liability, the buildout, workers&rsquo; comp, and liquor if you pour.</dd></div>
+</dl>
+<p class="act midcta"><a class="textlink" href="/blog/">All the notes &rarr;</a></p>
+</div></section>
+
 <section class="close"><div class="inner">
 <p class="label">Call or text</p>
 <a class="big" href="tel:+12056392604">626-799-7813</a>
@@ -338,7 +350,7 @@ section{padding:56px 20px}
 <div class="row"><p><b>Shaw, Moses, Mendenhall &amp; Associates Insurance</b><br>101 E. Huntington Dr., Suite 105<br>Monrovia, CA 91016</p><p><b>Sam Johnson</b>, Account Executive<br>CA License #4536079<br><a href="https://www.linkedin.com/in/joseph-johnson-9a3330257/">LinkedIn</a></p></div>
 </div></section>
 
-<footer><p><a href="/">Home</a> &middot; Also see: <a href="/">LA apartment building insurance</a></p><p>This page is general information, not a quote or an offer of coverage. Coverage terms are set by the policy issued. Cost figures are third-party published medians, not SMMA prices. Photo: Pasadena Weekly.</p></footer>
+<footer><p><a href="/">Home</a> &middot; <a href="/blog/">Notes</a> &middot; Also see: <a href="/">LA apartment building insurance</a></p><p>This page is general information, not a quote or an offer of coverage. Coverage terms are set by the policy issued. Cost figures are third-party published medians, not SMMA prices. Photo: Pasadena Weekly.</p></footer>
 <div class="stick"><a class="call" href="tel:+12056392604">Call 626-799-7813</a><a class="textlink" href="sms:+12056392604">Text Sam</a></div>
 <script>(function(){
 var f=document.getElementById('qform'),out=document.getElementById('rout'),go=document.getElementById('smsgo'),res=document.getElementById('result');
