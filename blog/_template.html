@@ -7,8 +7,12 @@
   How to post:
   1. Copy this file to blog/your-slug.html (lowercase, hyphens, no underscore).
   2. Replace every TODO below. Keep the visible phone number as 626-799-7813.
-     Copy the tel: and sms: hrefs from restaurants.html unchanged. They route
+     Copy the tel: and sms: hrefs from this file unchanged. They route
      to Sam's cell. Never typeset the digits from those hrefs on the page.
+     sms: links carry a prefilled body (sms:+1...?&amp;body=...). Keep the
+     "[restaurant]" and "[city]" placeholders so the owner fills them in.
+     Keep the dec page box (aside.dec) above "More notes", and the sticky
+     bar as Text Sam first, Call Sam second.
   3. Add a link at the top of the list in blog/index.html, and a blogPost
      entry in the Blog JSON-LD on that page.
   4. Add a <url> in sitemap.xml at the repo root.
@@ -90,6 +94,7 @@
 <a class="brand" href="/restaurants.html"><b>Sam Johnson</b> <span>SMMA · Monrovia</span></a>
 <nav class="topnav" aria-label="Restaurant notes">
 <a href="/restaurants.html">Restaurants</a>
+<a href="/restaurant-opening-checklist.html">Opening checklist</a>
 <a href="/blog/">Notes</a>
 <a class="call" href="tel:+12056392604">626-799-7813</a>
 </nav>
@@ -114,12 +119,20 @@
 <li><a href="https://example.com">TODO source name and what it is</a></li>
 </ol>
 </details>
+<aside class="dec" aria-label="Free dec page check">
+<p class="dec-k">Free. No lunch required, though it's still on me.</p>
+<h2>Text me a photo of your dec page. I'll tell you what's missing.</h2>
+<p>The declarations page is the first page or two of your policy: who's insured, the limits, the deductibles, and the list of forms. Take a picture, text it to me, and I'll text you back what I'd add, what I'd question, and what looks fine. If it all looks fine, I'll say so.</p>
+<p class="dec-acts"><a class="btn" href="sms:+12056392604?&amp;body=Hi%20Sam%2C%20here%27s%20a%20photo%20of%20my%20dec%20page.%20I%20own%20%5Brestaurant%5D%20in%20%5Bcity%5D.%20What%27s%20missing%3F">Text Sam your dec page</a><a href="tel:+12056392604">or call 626-799-7813</a></p>
+</aside>
 <nav class="more" aria-label="More notes">
 <h2>More notes</h2>
 <ul>
 <li><a href="/blog/california-restaurant-insurance-market.html">The market, as I see it this fall<span>Property, the FAIR Plan, workers’ comp.</span></a></li>
 <li><a href="/blog/liquor-liability-type-41-type-47.html">Liquor liability for a Type 41 or a Type 47<span>The license and the lawsuit.</span></a></li>
 <li><a href="/blog/new-restaurant-insurance-california.html">What a new California restaurant actually needs<span>The lease, then the list.</span></a></li>
+<li><a href="/restaurant-opening-checklist.html">New restaurant opening checklist<span>Landlord, city, health, fire, ABC, staff, insurance.</span></a></li>
+<li><a href="/restaurant-insurance/">Restaurant insurance by city<span>Who signs off in Monrovia, Pasadena, Rancho Cucamonga, and five more.</span></a></li>
 </ul>
 </nav>
 <aside class="bio">
@@ -132,7 +145,7 @@
 <p class="label">TODO a soft invitation, not a pitch</p>
 <p>I’ll buy lunch and hear the story of the place. Pick the restaurant.</p>
 <a class="big" href="tel:+12056392604">626-799-7813</a>
-<p class="alts"><a href="sms:+12056392604">Text me instead</a><a href="mailto:sam@smmainsurance.com">sam@smmainsurance.com</a></p>
+<p class="alts"><a href="sms:+12056392604?&amp;body=Hi%20Sam%2C%20I%20own%20%5Brestaurant%5D%20in%20%5Bcity%5D%20and%20have%20a%20question%20about%20my%20insurance.">Text me instead</a><a href="mailto:sam@smmainsurance.com">sam@smmainsurance.com</a></p>
 <div class="addr">
 <p><b>Shaw, Moses, Mendenhall &amp; Associates Insurance</b><br>101 E. Huntington Dr., Suite 105<br>Monrovia, CA 91016</p>
 <p><b>Sam Johnson</b>, Account Executive<br>CA License #4536079</p>
@@ -141,9 +154,9 @@
 </div>
 </section>
 <footer>
-<p><a href="/blog/">All notes</a> · <a href="/restaurants.html">Restaurant and bar insurance</a> · <a href="/">LA apartment insurance</a></p>
+<p><a href="/restaurant-opening-checklist.html">Opening checklist</a> · <a href="/restaurant-insurance/">Restaurant insurance by city</a> · <a href="/blog/">All notes</a> · <a href="/restaurants.html">Restaurant and bar insurance</a> · <a href="/">LA apartment insurance</a></p>
 <p>General information, not advice. Coverage depends on the policy.</p>
 </footer>
-<div class="stick"><a class="call" href="tel:+12056392604">Call 626-799-7813</a><a class="textlink" href="sms:+12056392604">Text Sam</a></div>
+<div class="stick"><a class="call" href="sms:+12056392604?&amp;body=Hi%20Sam%2C%20I%20own%20%5Brestaurant%5D%20in%20%5Bcity%5D%20and%20have%20a%20question%20about%20my%20insurance.">Text Sam</a><a class="textlink" href="tel:+12056392604">Call Sam</a></div>
 </body>
 </html>

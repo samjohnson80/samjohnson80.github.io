@@ -21,3 +21,13 @@ The phone number printed on the page is always `626-799-7813`. Copy the `tel:` a
 - `blog/california-restaurant-insurance-market.html` — the fall 2026 market
 - `blog/liquor-liability-type-41-type-47.html` — Type 41 and Type 47
 - `blog/new-restaurant-insurance-california.html` — what a new restaurant needs
+
+## City pages, the opening checklist, and text-first buttons
+
+- `restaurant-insurance/` holds one page per city (Monrovia, Arcadia, Pasadena, Duarte, Sierra Madre, Azusa, Glendora, Rancho Cucamonga) and a hub at `restaurant-insurance/index.html`. The older `city/*.html` pages are the apartment pages; do not mix them up.
+- Each city page has its own angle and a "Who signs off" list: the health agency (LA County Environmental Health, Pasadena's own Public Health Department, or San Bernardino County EHS for Rancho Cucamonga), the fire authority, the ABC district office, and the city. Every fact is cited in the page's Sources list. If an office moves or a rule changes, fix the fact and the source together.
+- `restaurant-opening-checklist.html` is the opening checklist. Checkmarks are saved only in the visitor's browser (localStorage). The "Text Sam where you're stuck" button fills in the first unchecked items.
+- Buttons are text-first: "Text Sam" comes before "Call Sam", including the sticky bar on phones. `sms:` links carry a prefilled body, for example `Hi Sam, I own [restaurant] in [city] and have a question about my insurance.` Keep the bracketed placeholders so the owner fills them in.
+- The standing offer is the free dec page check: "Text me a photo of your current dec page and I'll tell you what's missing." It appears as `aside.dec` (styled in `blog/notes.css`) on the city pages, the checklist, and every note, and as `#dec` on `restaurants.html`.
+- The same phone rule applies: the page shows 626-799-7813, and the hrefs stay exactly as they are.
+

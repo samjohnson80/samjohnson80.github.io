@@ -85,6 +85,33 @@ footer p+p{margin-top:8px}
 .book h2{font-family:var(--serif);font-weight:600;font-size:clamp(24px,2.6vw,32px);line-height:1.2;letter-spacing:-.01em}
 .book p{color:var(--soft);margin-top:8px;max-width:46em}
 .index-note{max-width:980px;margin:0 auto;padding:8px clamp(20px,5vw,64px) 10px;color:var(--soft);font-size:16px}
+/* text-first CTAs, dec page offer, city pages, opening checklist */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;background:var(--red);color:#fff;font-weight:700;text-decoration:none;border-radius:6px}
+.btn:hover{background:#8e2915}
+.lead-acts{display:flex;align-items:center;gap:10px 20px;flex-wrap:wrap;margin:6px 0 30px}
+.lead-acts a:not(.btn){font-weight:600;padding:10px 0}
+.dec{background:var(--paper2);border-left:4px solid var(--red);padding:26px clamp(20px,4vw,32px);margin:40px 0 8px}
+.dec-k{font-size:14px;font-weight:600;color:var(--soft);margin-bottom:6px}
+.dec h2,.dec h3{font-family:var(--serif);font-weight:600;font-size:clamp(24px,2.8vw,30px);line-height:1.2;letter-spacing:-.01em;margin-bottom:10px;max-width:22em}
+.dec p{max-width:62ch;margin-bottom:12px}
+.dec-acts{display:flex;align-items:center;gap:10px 20px;flex-wrap:wrap;margin:16px 0 0}
+.dec-acts a:not(.btn){font-weight:600;padding:10px 0}
+.prose sup{font-size:12px;line-height:0;margin-left:1px}
+.prose sup a{font-weight:600;text-decoration:none}
+.local{border-top:2px solid var(--ink);margin:6px 0 24px}
+.local dt{font-family:var(--serif);font-weight:600;font-size:19px;padding-top:14px}
+.local dd{padding:2px 0 14px;border-bottom:1px solid var(--rule);max-width:65ch}
+.book.cities a{grid-template-columns:1fr;gap:6px}
+.cl-bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px 18px;flex-wrap:wrap;background:var(--paper);border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);padding:10px 0;margin:0 0 8px}
+.cl-bar span{font-family:var(--serif);font-weight:600;font-size:20px}
+.cl-group h2{margin-top:36px}
+.prose ul.cl{list-style:none;margin:0}
+.prose .cl li{padding:0;margin:0;border-bottom:1px solid var(--rule);max-width:none}
+.cl label{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:14px 0;cursor:pointer}
+.cl input{width:22px;height:22px;margin-top:4px;accent-color:var(--red)}
+.cl input:checked+span{color:var(--soft);text-decoration:line-through;text-decoration-color:var(--red)}
+.cl-city{margin-top:24px}
+.cl-city a{color:var(--red);font-weight:600}
 @media (max-width:860px){
 body{font-size:17px;padding-bottom:76px}
 .topnav .call{display:none}
