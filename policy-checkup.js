@@ -792,6 +792,8 @@
   var lastText = '';
   var view = 'none';
   var job = 0;
+  var stepIndex = -1;
+  var statusExtra = '';
   var ocrWorker = null;
   var ocrLog = function () {};
   var pdfLoading = null;
@@ -948,28 +950,34 @@
     document.getElementById('pc-live').textContent = text || '';
   }
 
-  function showSteps(active) {
-    var html = '<ol class="pc-steps">' + CHECK_STEPS.map(function (s, i) {
-      var cls = i < active ? ' class="done"' : i === active ? ' class="on"' : '';
-      return '<li' + cls + '>' + s + '</li>';
-    }).join('') + '</ol>';
-    document.getElementById('pc-status').innerHTML = html;
-    if (active >= 0 && active < CHECK_STEPS.length) setLive(CHECK_STEPS[active]);
+  function showSteps(active, extra) {
+    stepIndex = active;
+    if (extra != null) statusExtra = extra;
+    var html = '';
+    if (statusExtra) html += '<p class="pc-now">' + esc(statusExtra) + '</p>';
+    if (active >= 0) {
+      html += '<ol class="pc-steps">' + CHECK_STEPS.map(function (s, i) {
+        var cls = i < active ? ' class="done"' : i === active ? ' class="on"' : '';
+        return '<li' + cls + '>' + s + '</li>';
+      }).join('') + '</ol>';
+    }
+    var el = document.getElementById('pc-status');
+    if (el) el.innerHTML = html;
+    var live = statusExtra || (active >= 0 && active < CHECK_STEPS.length ? CHECK_STEPS[active] : '');
+    setLive(live);
   }
 
-  function playSteps(mine) {
+  function watchSteps(mine) {
     var i = 0;
-    showSteps(0);
-    return new Promise(function (resolve) {
-      function tick() {
-        if (mine !== job) return resolve();
-        if (i >= CHECK_STEPS.length) return resolve();
-        showSteps(i);
+    showSteps(0, 'Reading the file on this device…');
+    var timer = setInterval(function () {
+      if (mine !== job) { clearInterval(timer); return; }
+      if (i < CHECK_STEPS.length - 1) {
         i += 1;
-        setTimeout(tick, 120);
+        showSteps(i);
       }
-      tick();
-    });
+    }, 450);
+    return function stop() { clearInterval(timer); };
   }
 
   function humanize(err) {
@@ -1080,8 +1088,7 @@
             (function (n) {
               seq = seq.then(function () {
                 if (mine !== job) return null;
-                setLive('Reading scanned page ' + n + ' on this device…');
-                document.getElementById('pc-status').innerHTML = '<p class="pc-now">Reading scanned page ' + n + ' on this device…</p>';
+                showSteps(stepIndex, 'Reading scanned page ' + n + ' on this device…');
                 return pdf.getPage(n).then(pageToCanvas);
               }).then(function (canvas) {
                 if (canvas) canvases.push(canvas);
@@ -1174,8 +1181,7 @@
       if (/language|traineddata/i.test(status)) label = 'Loading the English reader. Your file stays here.';
       else if (/core|initializ/i.test(status)) label = 'Getting the reader ready on this device…';
       else if (/recogniz/i.test(status) && typeof m.progress === 'number') label = 'Reading the photo on this device… ' + Math.round(m.progress * 100) + '%';
-      document.getElementById('pc-status').innerHTML = '<p class="pc-now">' + label + '</p>';
-      setLive(label);
+      showSteps(stepIndex, label);
     };
     return ensureWorker().then(function (worker) {
       var seq = Promise.resolve('');
@@ -1221,16 +1227,16 @@
       return;
     }
     setBusy(true);
-    document.getElementById('pc-status').innerHTML = '<p class="pc-now">Reading the file on this device…</p>';
-    setLive('Reading the file on this device…');
-    document.getElementById('pc-status').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var started = Date.now();
+    var stopSteps = watchSteps(mine);
+    document.getElementById('pc-status').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     var done;
     if (kind === 'pdf') {
       done = file.arrayBuffer().then(function (buf) {
         return readPdf(new Uint8Array(buf), mine);
       });
     } else if (kind === 'heic') {
-      document.getElementById('pc-status').innerHTML = '<p class="pc-now">Converting the HEIC photo on this device…</p>';
+      showSteps(stepIndex, 'Converting the HEIC photo on this device…');
       done = heicToBlob(file).then(function (blob) {
         return blobToCanvas(blob);
       }).then(function (canvas) {
@@ -1247,7 +1253,13 @@
     }
     done.then(function (parsed) {
       if (mine !== job || !parsed) return null;
-      return playSteps(mine).then(function () { return parsed; });
+      var wait = Math.max(0, 2000 - (Date.now() - started));
+      return new Promise(function (resolve) {
+        setTimeout(function () {
+          stopSteps();
+          resolve(parsed);
+        }, wait);
+      });
     }).then(function (parsed) {
       if (mine !== job || !parsed) return;
       lastText = parsed.text || '';
@@ -1258,6 +1270,7 @@
       render(result);
     }).catch(function (err) {
       if (mine !== job) return;
+      stopSteps();
       document.getElementById('pc-status').innerHTML = '';
       setError(humanize(err));
     }).then(function () {
@@ -1406,6 +1419,8 @@
     document.getElementById('pc-out').innerHTML = '';
     document.getElementById('pc-refine').hidden = true;
     document.getElementById('pc-status').innerHTML = '';
+    stepIndex = -1;
+    statusExtra = '';
     setError('');
     setLive('');
     setBusy(false);
