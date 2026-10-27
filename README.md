@@ -29,5 +29,6 @@ The phone number printed on the page is always `626-799-7813`. Copy the `tel:` a
 - `restaurant-opening-checklist.html` is the opening checklist. Checkmarks are saved only in the visitor's browser (localStorage). The "Text Sam where you're stuck" button fills in the first unchecked items.
 - Buttons are text-first: "Text Sam" comes before "Call Sam", including the sticky bar on phones. `sms:` links carry a prefilled body, for example `Hi Sam, I own [restaurant] in [city] and have a question about my insurance.` Keep the bracketed placeholders so the owner fills them in.
 - The standing offer is the free dec page check: "Text me a photo of your current dec page and I'll tell you what's missing." It appears as `aside.dec` (styled in `blog/notes.css`) on the city pages, the checklist, and every note, and as `#dec` on `restaurants.html`.
+- `policy-checkup.html` is the in-browser dec-page checkup. The file is read on the visitor's device. Do not add a form, analytics call, or upload endpoint for it. Link it from the restaurant nav as "Policy checkup."
 - The same phone rule applies: the page shows 626-799-7813, and the hrefs stay exactly as they are.
 

@@ -96,6 +96,7 @@ footer p+p{margin-top:8px}
 .dec p{max-width:62ch;margin-bottom:12px}
 .dec-acts{display:flex;align-items:center;gap:10px 20px;flex-wrap:wrap;margin:16px 0 0}
 .dec-acts a:not(.btn){font-weight:600;padding:10px 0}
+.dec p:not(.dec-acts) a{color:var(--red);font-weight:600}
 .prose sup{font-size:12px;line-height:0;margin-left:1px}
 .prose sup a{font-weight:600;text-decoration:none}
 .local{border-top:2px solid var(--ink);margin:6px 0 24px}
