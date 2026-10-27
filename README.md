@@ -16,6 +16,14 @@ Write the way the restaurant page sounds. First person, for an owner, specific t
 
 The phone number printed on the page is always `626-799-7813`. Copy the `tel:` and `sms:` hrefs from `restaurants.html` unchanged. They route to his cell and are not the number visitors should read. Do not typeset the digits from those hrefs anywhere on a page.
 
+## SGV Eats
+
+`sgv-eats/` is the food page: a daily spotlight and a monthly "New in the SGV" roundup. It uses the same paper, Fraunces, and red as the notes, and it is not an insurance pitch. One soft line about Sam per page.
+
+A daily spotlight follows the comment at the top of `sgv-eats/_spotlight_template.html`: new file under `sgv-eats/spotlight/`, move the current feature into the archive on `sgv-eats/index.html`, put the new restaurant in the feature slot, and add the URL to `sitemap.xml`. The template is underscore-prefixed so GitHub Pages does not publish it.
+
+A new month follows the comment at the top of `sgv-eats/openings/index.html`.
+
 ## What’s in the first three notes
 
 - `blog/california-restaurant-insurance-market.html` — the fall 2026 market
