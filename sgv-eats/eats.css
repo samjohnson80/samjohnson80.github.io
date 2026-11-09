@@ -90,6 +90,7 @@ footer p+p{margin-top:8px}
 .feature{grid-template-columns:1fr}
 .mark{min-height:120px;flex-direction:row;align-items:flex-end}
 .mark b{font-size:56px}
+.mark svg{width:48px;height:48px;right:10px;bottom:auto;top:14px}
 .archive a{grid-template-columns:72px 1fr}
 .archive span{grid-column:2}
 .facts div{grid-template-columns:1fr;gap:2px}
