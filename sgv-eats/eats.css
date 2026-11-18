@@ -37,6 +37,8 @@ h3{font-family:var(--serif);font-weight:560;font-size:26px;line-height:1.2;lette
 #share-fallback{margin:0 0 22px}
 #share-fallback input{width:min(100%,420px);padding:12px;border:1px solid #c9bfb1;border-radius:8px;font:16px var(--sans);background:#fff}
 .feature{display:grid;grid-template-columns:minmax(140px,200px) 1fr;gap:18px 22px;background:var(--ink);color:#f6f1e9;padding:22px;border-radius:4px;text-decoration:none;align-items:stretch}
+.feature.with-og{grid-template-columns:1fr}
+.feature.with-og > img{width:100%;height:auto;display:block;border-radius:2px}
 .feature:hover h2{color:#f0b7a8}
 .mark{background:#fbf8f3;color:var(--ink);border-radius:2px;min-height:180px;display:flex;flex-direction:column;justify-content:space-between;padding:16px 14px 14px;position:relative;overflow:hidden}
 .mark b{font-family:var(--serif);font-weight:560;font-size:64px;line-height:.8;letter-spacing:-.04em}
